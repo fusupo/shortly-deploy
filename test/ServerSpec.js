@@ -6,21 +6,28 @@ var app = require('../server-config.js');
 var db = require('../app/config');
 var User = require('../app/models/user');
 var Link = require('../app/models/link');
+var Links = require('../app/collections/links');
+
+function xbeforeEach(){};
 
 /////////////////////////////////////////////////////
 // NOTE: these tests are designed for mongo!
 /////////////////////////////////////////////////////
 
-xdescribe('', function() {
+describe('', function() {
 
-  beforeEach(function(done) {
+  xbeforeEach(function(done) {
     // Log out currently signed in user
     request(app)
       .get('/logout')
       .end(function(err, res) {
 
+        console.log("THIS IS SOME OUTPUT!!! ", Link.findOne({'url' : 'http://www.roflzoo.com/'}).exec());
+
         // Delete objects from db so they can be created later for the test
+        console.log("Logging Link before", Link);
         Link.remove({url : 'http://www.roflzoo.com/'}).exec();
+        // console.log("Logging Link after", Link);
         User.remove({username : 'Savannah'}).exec();
         User.remove({username : 'Phillip'}).exec();
 
@@ -39,7 +46,7 @@ xdescribe('', function() {
         .end(done);
     });
 
-    describe('Shortening links:', function() {
+    xdescribe('Shortening links:', function() {
 
       it('Responds with the short code', function(done) {
         request(app)
@@ -88,7 +95,7 @@ xdescribe('', function() {
 
     }); // 'Shortening Links'
 
-    describe('With previously saved urls: ', function() {
+    xdescribe('With previously saved urls: ', function() {
 
       beforeEach(function(done) {
         link = new Link({
@@ -133,7 +140,7 @@ xdescribe('', function() {
 
   }); // 'Link creation'
 
-  describe('Priviledged Access:', function(){
+  xdescribe('Priviledged Access:', function(){
 
     // /*  Authentication  */
     // // TODO: xit out authentication
@@ -169,7 +176,7 @@ xdescribe('', function() {
 
   }); // 'Privileged Access'
 
-  describe('Account Creation:', function(){
+  xdescribe('Account Creation:', function(){
 
     it('Signup creates a new user', function(done) {
       request(app)
@@ -205,7 +212,7 @@ xdescribe('', function() {
 
   }); // 'Account Creation'
 
-  describe('Account Login:', function(){
+  xdescribe('Account Login:', function(){
 
     beforeEach(function(done) {
       new User({

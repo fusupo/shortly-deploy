@@ -10,7 +10,7 @@ module.exports = function(grunt) {
         options: {
           reporter: 'spec'
         },
-        src: ['test/**/*.js']
+        src: ['test/ServerSpec.js']
       }
     },
 
@@ -21,6 +21,10 @@ module.exports = function(grunt) {
     },
 
     uglify: {
+      // build: {
+      //   src: 'js/build/production.js',
+      //   dest: 'js/build/production.min.js'
+      // }
     },
 
     jshint: {
