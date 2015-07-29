@@ -7,7 +7,9 @@ iisnode.yml
 # Icon must ends with two \r.
 Icon
 
-
+*.publishsettings
+db/shortly.sqlite
+node_modules/
 
 
 # Floobits
