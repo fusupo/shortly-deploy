@@ -6,7 +6,6 @@ var app = require('../server-config.js');
 var db = require('../app/config');
 var User = require('../app/models/user');
 var Link = require('../app/models/link');
-var Links = require('../app/collections/links');
 
 function xbeforeEach(){};
 
