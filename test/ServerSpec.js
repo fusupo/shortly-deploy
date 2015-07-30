@@ -15,18 +15,13 @@ function xbeforeEach(){};
 
 describe('', function() {
 
-  xbeforeEach(function(done) {
+  beforeEach(function(done) {
     // Log out currently signed in user
     request(app)
       .get('/logout')
       .end(function(err, res) {
 
-        console.log("THIS IS SOME OUTPUT!!! ", Link.findOne({'url' : 'http://www.roflzoo.com/'}).exec());
-
-        // Delete objects from db so they can be created later for the test
-        console.log("Logging Link before", Link);
         Link.remove({url : 'http://www.roflzoo.com/'}).exec();
-        // console.log("Logging Link after", Link);
         User.remove({username : 'Savannah'}).exec();
         User.remove({username : 'Phillip'}).exec();
 
@@ -45,7 +40,7 @@ describe('', function() {
         .end(done);
     });
 
-    xdescribe('Shortening links:', function() {
+    describe('Shortening links:', function() {
 
       it('Responds with the short code', function(done) {
         request(app)
@@ -86,7 +81,8 @@ describe('', function() {
             Link.findOne({'url' : 'http://www.roflzoo.com/'})
               .exec(function(err,link){
                 if(err) console.log(err);
-                expect(link.title).to.equal('Rofl Zoo - Daily funny animal pictures');
+                //expect(link.title).to.equal('Rofl Zoo - Daily funny animal pictures');
+                expect(link.title).to.equal('Funny pictures of animals, funny dog pictures');
               });
           })
           .end(done);
@@ -94,7 +90,7 @@ describe('', function() {
 
     }); // 'Shortening Links'
 
-    xdescribe('With previously saved urls: ', function() {
+    describe('With previously saved urls: ', function() {
 
       beforeEach(function(done) {
         link = new Link({
@@ -139,7 +135,7 @@ describe('', function() {
 
   }); // 'Link creation'
 
-  xdescribe('Priviledged Access:', function(){
+  describe('Priviledged Access:', function(){
 
     // /*  Authentication  */
     // // TODO: xit out authentication
@@ -175,7 +171,7 @@ describe('', function() {
 
   }); // 'Privileged Access'
 
-  xdescribe('Account Creation:', function(){
+  describe('Account Creation:', function(){
 
     it('Signup creates a new user', function(done) {
       request(app)
@@ -211,7 +207,7 @@ describe('', function() {
 
   }); // 'Account Creation'
 
-  xdescribe('Account Login:', function(){
+  describe('Account Login:', function(){
 
     beforeEach(function(done) {
       new User({

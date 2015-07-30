@@ -28,13 +28,13 @@ userSchema.pre('save', function(next) {
   this.hashPassword(next);
 });
 
-userSchema.comparePassword = function(attemptedPassword, callback) {
+userSchema.methods.comparePassword = function(attemptedPassword, callback) {
   bcrypt.compare(attemptedPassword, this.password, function(err, isMatch) {
     callback(isMatch);
   });
 }
 
-userSchema.hashPassword = function(cbk){
+userSchema.methods.hashPassword = function(cbk){
   var cipher = Promise.promisify(bcrypt.hash);
   return cipher(this.password, null, null).bind(this)
     .then(function(hash) {
