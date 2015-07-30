@@ -10,7 +10,7 @@ Icon
 *.publishsettings
 db/shortly.sqlite
 node_modules/
-
+public/dist/*
 
 # Floobits
 .floo

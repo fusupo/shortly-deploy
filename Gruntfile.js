@@ -3,6 +3,10 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     concat: {
+      build:{
+        src: ['public/lib/*.js','public/client/*.js'],
+        dest: 'public/dist/main_concat.js'
+      }
     },
 
     mochaTest: {
@@ -21,15 +25,17 @@ module.exports = function(grunt) {
     },
 
     uglify: {
-      // build: {
-      //   src: 'js/build/production.js',
-      //   dest: 'js/build/production.min.js'
-      // }
+      build: {
+        src: 'public/dist/main_concat.js',
+        dest: 'public/dist/main_concat.min.js'
+      }
     },
 
     jshint: {
       files: [
-        // Add filespec list here
+        'app/*.js',
+        'app/*/*.js',
+        'public/client/*.js'
       ],
       options: {
         force: 'true',
@@ -42,6 +48,10 @@ module.exports = function(grunt) {
     },
 
     cssmin: {
+      build: {
+          src: 'public/style.css',
+          dest: 'public/dist/style.min.css'
+      }
     },
 
     watch: {
@@ -63,7 +73,16 @@ module.exports = function(grunt) {
 
     shell: {
       prodServer: {
+        command: 'git push azure master',
       }
+    },
+
+    clean: {
+      foo: {
+        src: ['public/dist/main_concat.js'],
+
+      },
+
     },
   });
 
@@ -74,6 +93,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-mocha-test');
   grunt.loadNpmTasks('grunt-shell');
+  grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-nodemon');
 
   grunt.registerTask('server-dev', function (target) {
@@ -98,11 +118,20 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('build', [
+    'jshint',
+    'concat',
+    'uglify', 
+    'cssmin',
+    'clean'
+    // grunt.file.delete('public/dist/main_concat.js')
   ]);
+
+
 
   grunt.registerTask('upload', function(n) {
     if(grunt.option('prod')) {
       // add your production server task here
+      grunt.task.run(['test', 'build', 'shell']);
     } else {
       grunt.task.run([ 'server-dev' ]);
     }

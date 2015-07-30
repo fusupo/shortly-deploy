@@ -18,7 +18,7 @@
   "latedef": false,
   "newcap": false,
   "noarg": false,
-  "trailing": false,
+  "trailing": true,
   "loopfunc": true,
   "smarttabs": true
 }
