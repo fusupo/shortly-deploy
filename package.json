@@ -6,6 +6,9 @@
   "repository": "",
   "license": "Proprietary",
   "private": true,
+  "scripts": {
+    "test": "mocha test/ServerSpec.js"
+  },
   "engines": {
     "node": "0.12.0"
   },
