@@ -4,9 +4,16 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
     concat: {
       build:{
-        src: ['public/lib/*.js','public/client/*.js'],
-        dest: 'public/dist/main_concat.js'
-      }
+        files: {
+              'public/dist/main_concat.js' : ['public/client/*.js'],
+              'public/dist/lib_concat.js' : [
+                'public/lib/jquery.js',
+                'public/lib/underscore.js',
+                'public/lib/backbone.js',
+                'public/lib/handlebars.js'
+              ],        
+        },
+      },
     },
 
     mochaTest: {
@@ -26,8 +33,10 @@ module.exports = function(grunt) {
 
     uglify: {
       build: {
-        src: 'public/dist/main_concat.js',
-        dest: 'public/dist/main_concat.min.js'
+        files: {
+              'public/dist/main_concat.min.js' : ['public/dist/main_concat.js'],
+              'public/dist/lib_concat.min.js' : ['public/dist/lib_concat.js'],        
+        },
       }
     },
 
@@ -79,7 +88,7 @@ module.exports = function(grunt) {
 
     clean: {
       foo: {
-        src: ['public/dist/main_concat.js'],
+        src: ['public/dist/lib_concat.js', 'public/dist/main_concat.js' ],
 
       },
 
