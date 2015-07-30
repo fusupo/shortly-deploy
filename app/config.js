@@ -2,7 +2,11 @@ var Bookshelf = require('bookshelf');
 var path = require('path');
 
 var mongoose = require('mongoose');
+if(process.env.PORT){
+  mongoose.connect('mongodb://MongoLab-m:_6JT_9uZeW53.oJ29iWflWuensk8ZRusvDoVEtYmgpw-@ds036648.mongolab.com:36648/MongoLab-m');
+} else{
 mongoose.connect('mongodb://localhost/test');
+}
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
